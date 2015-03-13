@@ -1,0 +1,27 @@
+{
+  "name": "good-winston",
+  "version": "0.1.0",
+  "description": "hapi good-reporter to winston adapter",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lancespeelmon/good-winston.git"
+  },
+  "keywords": [
+    "hapi",
+    "good",
+    "reporter",
+    "winston",
+    "logger",
+    "adapter"
+  ],
+  "author": "Lance Speelmon <lance@speelmon.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lancespeelmon/good-winston/issues"
+  },
+  "homepage": "https://github.com/lancespeelmon/good-winston"
+}
