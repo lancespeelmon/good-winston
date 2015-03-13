@@ -23,5 +23,20 @@
   "bugs": {
     "url": "https://github.com/lancespeelmon/good-winston/issues"
   },
-  "homepage": "https://github.com/lancespeelmon/good-winston"
+  "homepage": "https://github.com/lancespeelmon/good-winston",
+  "devDependencies": {
+    "coffee-script": "^1.9.1",
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-coffee": "^2.3.1",
+    "gulp-coffee-istanbul": "^0.7.0",
+    "gulp-coffeelint": "^0.4.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-sourcemaps": "^1.5.0",
+    "gulp-util": "^3.0.4"
+  },
+  "dependencies": {
+    "good-reporter": "^3.0.1",
+    "hoek": "^2.11.1"
+  }
 }
