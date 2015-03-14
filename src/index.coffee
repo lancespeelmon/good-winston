@@ -8,24 +8,21 @@ internals =
 
 class GoodWinston
   constructor: (events, winston, options = {}) ->
-    console.log "events=", events
-    console.log "winston=", winston?
     Hoek.assert @constructor == GoodWinston, 'GoodWinston must be created with new'
     Hoek.assert winston, 'winston logger must not be null'
     settings = Hoek.applyToDefaults internals.defaults, options
-    console.log "settings=", settings
     @winston = winston
     @level = settings.level
     GoodReporter.call this, events, settings
 
 Hoek.inherits GoodWinston, GoodReporter
 
-GoodWinston::_logResponse = (event) ->
+GoodWinston::_logResponse = (event, tags=[]) ->
   query = if event.query then JSON.stringify(event.query) else ''
   responsePayload = ''
   if typeof event.responsePayload == 'object' and event.responsePayload
     responsePayload = 'response payload: ' + SafeStringify event.responsePayload
-  @winston[@level] Hoek.format '%s: %s %s %s %s (%sms) %s',
+  @winston[@level] "[#{tags}], " + Hoek.format '%s: %s %s %s %s (%sms) %s',
     event.instance,
     event.method,
     event.path,
@@ -36,7 +33,7 @@ GoodWinston::_logResponse = (event) ->
 
 GoodWinston::_report = (event, data) ->
   if event == 'response'
-    @_logResponse data
+    @_logResponse data, data.tags
   else if event == 'ops'
     @winston[@level] Hoek.format 'memory: %sMb, uptime (seconds): %s, load: %s',
       Math.round(data.proc.mem.rss / (1024 * 1024)),
@@ -44,7 +41,7 @@ GoodWinston::_report = (event, data) ->
       data.os.load
   else if event == 'error'
     @winston[@level] 'message: ' + data.error.message + ' stack: ' + data.error.stack
-  else if eventName == 'request' or eventName == 'log'
+  else if event == 'request' or event == 'log'
     @winston[@level] 'data: ' + if typeof data.data == 'object' then SafeStringify(data.data) else data.data
   # Event that is unknown to good-console, try a defualt.
   else if data.data
