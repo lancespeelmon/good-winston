@@ -1,6 +1,6 @@
 {
   "name": "good-winston",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "hapi good-reporter to winston adapter",
   "main": "lib/index.js",
   "scripts": {
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "good-reporter": "^3.0.1",
-    "hoek": "^2.11.1"
+    "hoek": "^2.11.1",
+    "json-stringify-safe": "^5.0.0"
   }
 }

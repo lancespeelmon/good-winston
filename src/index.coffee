@@ -1,5 +1,6 @@
 GoodReporter = require 'good-reporter'
 Hoek = require 'hoek'
+SafeStringify = require 'json-stringify-safe'
 
 internals =
   defaults:
@@ -19,14 +20,37 @@ class GoodWinston
 
 Hoek.inherits GoodWinston, GoodReporter
 
-GoodWinston::_report = (event, eventData) ->
-  console.log "_report()"
-  console.dir event
-  if event == 'ops'
+GoodWinston::_logResponse = (event) ->
+  query = if event.query then JSON.stringify(event.query) else ''
+  responsePayload = ''
+  if typeof event.responsePayload == 'object' and event.responsePayload
+    responsePayload = 'response payload: ' + SafeStringify event.responsePayload
+  @winston[@level] Hoek.format '%s: %s %s %s %s (%sms) %s',
+    event.instance,
+    event.method,
+    event.path,
+    query,
+    event.statusCode,
+    event.responseTime,
+    responsePayload
+
+GoodWinston::_report = (event, data) ->
+  if event == 'response'
+    @_logResponse data
+  else if event == 'ops'
     @winston[@level] Hoek.format 'memory: %sMb, uptime (seconds): %s, load: %s',
-      Math.round(eventData.proc.mem.rss / (1024 * 1024)),
-      eventData.proc.uptime,
-      eventData.os.load
+      Math.round(data.proc.mem.rss / (1024 * 1024)),
+      data.proc.uptime,
+      data.os.load
+  else if event == 'error'
+    @winston[@level] 'message: ' + data.error.message + ' stack: ' + data.error.stack
+  else if eventName == 'request' or eventName == 'log'
+    @winston[@level] 'data: ' + if typeof data.data == 'object' then SafeStringify(data.data) else data.data
+  # Event that is unknown to good-console, try a defualt.
+  else if data.data
+    @winston[@level] 'data: ' + if typeof data.data == 'object' then SafeStringify(data.data) else data.data
+  else
+    @winston[@level] 'data: (none)'
 
 GoodWinston::start = (emitter, callback) ->
   emitter.on 'report', @_handleEvent.bind(this)
@@ -35,4 +59,4 @@ GoodWinston::start = (emitter, callback) ->
 GoodWinston::stop = ->
   return
 
-module.exports = GoodWinston
+module.exports = exports = GoodWinston
