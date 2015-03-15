@@ -1,7 +1,7 @@
 {
   "name": "good-winston",
-  "version": "0.1.4",
-  "description": "hapi good-reporter to winston adapter",
+  "version": "0.1.5",
+  "description": "hapi good-reporter to winston logging adapter",
   "main": "lib/index.js",
   "scripts": {
     "test": "gulp test"

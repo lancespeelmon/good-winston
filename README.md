@@ -1,6 +1,6 @@
 # good-winston
 
-A [hapi][0] [good-reporter][1] to [winston][2] adapter.
+A [hapi][0] [good-reporter][1] to [winston][2] logging adapter.
 
 ## Installation
 
