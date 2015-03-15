@@ -41,7 +41,11 @@ server.register({
 
 The following `options` are availble to configure `GoodWinston`:
 
-* __level:__ Map all good events to this winston level (Default `info`).
+* __error_level:__ Map all good `error` events to this winston level (Default `error`).
+* __ops_level:__ Map all good `ops` events to this winston level (Default `info`).
+* __request_level:__ Map all good `request` events to this winston level (Default `info`).
+* __response_level:__ Map all good `response` events to this winston level (Default `info`).
+* __other_level:__ Map all other good events to this winston level (Default `info`).
 
 [0]: http://hapijs.com
 [1]: https://github.com/hapijs/good-reporter

@@ -4,7 +4,11 @@ SafeStringify = require 'json-stringify-safe'
 
 internals =
   defaults:
-    level: 'info'
+    error_level: 'error'
+    ops_level: 'info'
+    request_level: 'info'
+    response_level: 'info'
+    other_level: 'info'
 
 class GoodWinston
   constructor: (events, winston, options = {}) ->
@@ -12,7 +16,11 @@ class GoodWinston
     Hoek.assert winston, 'winston logger must not be null'
     settings = Hoek.applyToDefaults internals.defaults, options
     @winston = winston
-    @level = settings.level
+    @error_level = settings.error_level
+    @ops_level = settings.ops_level
+    @request_level = settings.request_level
+    @response_level = settings.response_level
+    @other_level = settings.other_level
     GoodReporter.call this, events, settings
 
 Hoek.inherits GoodWinston, GoodReporter
@@ -22,7 +30,7 @@ GoodWinston::_logResponse = (event, tags=[]) ->
   responsePayload = ''
   if typeof event.responsePayload == 'object' and event.responsePayload
     responsePayload = 'response payload: ' + SafeStringify event.responsePayload
-  @winston[@level] "[#{tags}], " + Hoek.format '%s: %s %s %s %s (%sms) %s',
+  @winston[@response_level] "[#{tags}], " + Hoek.format '%s: %s %s %s %s (%sms) %s',
     event.instance,
     event.method,
     event.path,
@@ -35,19 +43,19 @@ GoodWinston::_report = (event, data) ->
   if event == 'response'
     @_logResponse data, data.tags
   else if event == 'ops'
-    @winston[@level] Hoek.format 'memory: %sMb, uptime (seconds): %s, load: %s',
+    @winston[@ops_level] Hoek.format 'memory: %sMb, uptime (seconds): %s, load: %s',
       Math.round(data.proc.mem.rss / (1024 * 1024)),
       data.proc.uptime,
       data.os.load
   else if event == 'error'
-    @winston[@level] 'message: ' + data.error.message + ' stack: ' + data.error.stack
+    @winston[@error_level] 'message: ' + data.error.message + ' stack: ' + data.error.stack
   else if event == 'request' or event == 'log'
-    @winston[@level] 'data: ' + if typeof data.data == 'object' then SafeStringify(data.data) else data.data
+    @winston[@request_level] 'data: ' + if typeof data.data == 'object' then SafeStringify(data.data) else data.data
   # Event that is unknown to good-console, try a defualt.
   else if data.data
-    @winston[@level] 'data: ' + if typeof data.data == 'object' then SafeStringify(data.data) else data.data
+    @winston[@other_level] 'data: ' + if typeof data.data == 'object' then SafeStringify(data.data) else data.data
   else
-    @winston[@level] 'data: (none)'
+    @winston[@other_level] 'data: (none)'
 
 GoodWinston::start = (emitter, callback) ->
   emitter.on 'report', @_handleEvent.bind(this)
