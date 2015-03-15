@@ -5,6 +5,7 @@ A [hapi][0] [good-reporter][1] to [winston][2] adapter.
 ## Installation
 
 ``` bash
+  $ npm install winston
   $ npm install good-winston
 ```
 
@@ -15,7 +16,7 @@ then either add it to an existing winston logger or pass an instance to a new
 winston logger:
 
 ``` js
-var GoodWinston = require('./good-winston');
+var GoodWinston = require('good-winston');
 var winston = require('winston');
 
 server.register({
