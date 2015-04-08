@@ -57,11 +57,16 @@ GoodWinston::_report = (event, data) ->
   else
     @winston[@other_level] 'data: (none)'
 
-GoodWinston::start = (emitter, callback) ->
-  emitter.on 'report', @_handleEvent.bind(this)
-  callback null
-
-GoodWinston::stop = ->
+GoodWinston::stop = () ->
   return
+
+GoodWinston::init = (readstream, emitter, callback) ->
+  readstream.on 'data', (chunk) =>
+    @_handleEvent chunk.event, chunk
+
+  emitter.on 'stop', () =>
+    @stop()
+
+  callback null
 
 module.exports = exports = GoodWinston
