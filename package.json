@@ -39,5 +39,35 @@
     "good-reporter": "^3.0.1",
     "hoek": "^2.11.1",
     "json-stringify-safe": "^5.0.0"
+  },
+  "coffeelintConfig": {
+    "arrow_spacing": {
+      "name": "arrow_spacing",
+      "level": "error"
+    },
+    "max_line_length": {
+      "name": "max_line_length",
+      "value": 150,
+      "level": "warn",
+      "limitComments": false
+    },
+    "indentation": {
+      "name": "indentation",
+      "value": 2,
+      "level": "warn"
+    },
+    "no_empty_param_list": {
+      "name": "no_empty_param_list",
+      "level": "ignore"
+    },
+    "cyclomatic_complexity": {
+      "name": "cyclomatic_complexity",
+      "value": 22,
+      "level": "error"
+    },
+    "no_unnecessary_fat_arrows": {
+      "name": "no_unnecessary_fat_arrows",
+      "level": "error"
+    }
   }
 }
