@@ -46,6 +46,6 @@ The following `options` are availble to configure `GoodWinston`:
 * __request_level:__ Map all good `request` events to this winston level (Default `info`).
 * __response_level:__ Map all good `response` events to this winston level (Default `info`).
 * __other_level:__ Map all other good events to this winston level (Default `info`).
-
+* __color:__ colorize output in response logs ( Defalt `true` )
 [0]: http://hapijs.com
 [1]: https://github.com/winstonjs/winston
