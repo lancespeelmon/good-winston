@@ -3,9 +3,7 @@
   "version": "2.0.0",
   "description": "hapi good-reporter to winston logging adapter",
   "main": "lib/index.js",
-  "scripts": {
-    "test": "gulp test"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/lancespeelmon/good-winston.git"
@@ -24,49 +22,9 @@
     "url": "https://github.com/lancespeelmon/good-winston/issues"
   },
   "homepage": "https://github.com/lancespeelmon/good-winston",
-  "devDependencies": {
-    "coffee-script": "^1.9.1",
-    "del": "^1.1.1",
-    "gulp": "^3.8.11",
-    "gulp-coffee": "^2.3.1",
-    "gulp-coffee-istanbul": "^0.7.0",
-    "gulp-coffeelint": "^0.4.0",
-    "gulp-mocha": "^2.0.0",
-    "gulp-sourcemaps": "^1.5.0",
-    "gulp-util": "^3.0.4"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "hoek": "^2.12.0",
-    "json-stringify-safe": "^5.0.0"
-  },
-  "coffeelintConfig": {
-    "arrow_spacing": {
-      "name": "arrow_spacing",
-      "level": "error"
-    },
-    "max_line_length": {
-      "name": "max_line_length",
-      "value": 150,
-      "level": "warn",
-      "limitComments": false
-    },
-    "indentation": {
-      "name": "indentation",
-      "value": 2,
-      "level": "warn"
-    },
-    "no_empty_param_list": {
-      "name": "no_empty_param_list",
-      "level": "ignore"
-    },
-    "cyclomatic_complexity": {
-      "name": "cyclomatic_complexity",
-      "value": 22,
-      "level": "error"
-    },
-    "no_unnecessary_fat_arrows": {
-      "name": "no_unnecessary_fat_arrows",
-      "level": "error"
-    }
+    "hoek": "^4.0.2",
+    "json-stringify-safe": "^5.0.1"
   }
 }
