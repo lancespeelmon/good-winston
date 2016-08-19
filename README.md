@@ -22,16 +22,16 @@ var winston = require('winston');
 server.register({
   register: require('good'),
   options: {
-    reporters: [
-      new GoodWinston({
-        ops: '*',
-        request: '*',
-        response: '*',
-        log: '*',
-        error: '*'
-      }, winston)
-    ]
-  }
+    winston: {
+      module: 'good-winston',
+      args:[winston, {
+         error_level: 'error'
+        ,ops_level: 'debug'
+        ,request_level:'debug'
+        ,response_level:'info'
+        ,other_level: 'info'
+      }]
+    }
 }, function(err) {
   if (err) {
     return server.log(['error'], 'good load error: ' + err);
@@ -46,7 +46,6 @@ The following `options` are availble to configure `GoodWinston`:
 * __request_level:__ Map all good `request` events to this winston level (Default `info`).
 * __response_level:__ Map all good `response` events to this winston level (Default `info`).
 * __other_level:__ Map all other good events to this winston level (Default `info`).
-
+* __color:__ colorize output in response logs ( Defalt `true` )
 [0]: http://hapijs.com
-[1]: https://github.com/hapijs/good-reporter
-[2]: https://github.com/winstonjs/winston
+[1]: https://github.com/winstonjs/winston

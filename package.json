@@ -36,7 +36,6 @@
     "gulp-util": "^3.0.4"
   },
   "dependencies": {
-    "good-reporter": "^3.0.1",
     "hoek": "^2.12.0",
     "json-stringify-safe": "^5.0.0"
   },
