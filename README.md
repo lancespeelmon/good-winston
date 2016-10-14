@@ -1,6 +1,6 @@
 # good-winston
 
-A [hapi][0] [good-reporter][1] to [winston][2] logging adapter.
+A [hapi][0] [good][1] reporter to [winston][2] logging adapter.
 
 ## Installation
 
@@ -51,4 +51,5 @@ The following `options` are availble to configure `GoodWinston`:
 * __other_level:__ Map all other good events to this winston level (Default `info`).
 * __color:__ colorize output in response logs ( Defalt `true` )
 [0]: http://hapijs.com
-[1]: https://github.com/winstonjs/winston
+[1]: https://github.com/hapijs/good
+[2]: https://github.com/winstonjs/winston
