@@ -24,7 +24,7 @@
   "homepage": "https://github.com/lancespeelmon/good-winston",
   "devDependencies": {},
   "dependencies": {
-    "hoek": "^4.0.2",
+    "hoek": "^4.1.0",
     "json-stringify-safe": "^5.0.1"
   }
 }
