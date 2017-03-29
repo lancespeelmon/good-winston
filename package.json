@@ -1,6 +1,6 @@
 {
   "name": "good-winston",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "hapi good-reporter to winston logging adapter",
   "main": "lib/index.js",
   "scripts": {},
