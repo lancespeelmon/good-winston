@@ -1,55 +1,79 @@
 # good-winston
 
-A [hapi][0] [good][1] reporter to [winston][2] logging adapter.
+A [hapi](http://hapijs.com) [good](https://github.com/hapijs/good) stream to [winston](https://github.com/winstonjs/winston) logging adapter.
+
+This stream clones [good-console](https://github.com/hapijs/good-console) but terminates logs to winston.
 
 ## Installation
 
-``` bash
-  $ npm install winston
-  $ npm install good-winston
+```bash
+  $ npm install -S winston
+  $ npm install -S good-winston
 ```
 
 ## Usage
 
-To use the `GoodWinston` transport in winston, you simply need to require it and
-then either add it to an existing winston logger or pass an instance to a new
-winston logger:
+To use the `GoodWinston` you simply need to require it and pass it a winston logger instance -
+```javascript
+const GoodWinston = require('good-winston');
+const winston = require('winston');
+const goodWinstonStream = new GoodWinston({ winston });
+```
 
-``` js
-var GoodWinston = require('good-winston');
-var winston = require('winston');
+The following `config` options are availble to configure `GoodWinston`:
+- `config` - required configuration object with the following keys
+  - `winston` - winston logger (required).
+  - `level` - Log level for internal events -
+    - `error` - Map all good `error` events to this winston level (Default `error`).
+    - `other` - Map all other good events to this winston level (Default `info`).
+    - `ops` - Map all good `ops` events to this winston level (Default `info`).
+    - `response` - Map all good `response` events to this winston level (Default `info`).
+    - `request` - Map all good `request` events to this winston level (Default `undefined` so level will be deduced from tags).
+  - `format` - [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string. Defaults to 'YYMMDD/HHmmss.SSS'.
+  - `utc` - boolean controlling Moment using [utc mode](http://momentjs.com/docs/#/parsing/utc/) or not. Defaults to `true`.
+  - `color` - a boolean specifying whether to output in color. Defaults to `true`.
+
+## Integrating with good
+As with any good stream new `good-winston` you can either pass the created stream to good -
+```javascript
+const GoodWinston = require('good-winston');
+const goodWinstonStream = new GoodWinston({ winston: require('winston') });
+const good = require('good');
+
 
 server.register({
-  register: require('good'),
-  
+  register: good,  
   options: {
     reporters:{
-      winston: [{
-        module: 'good-winston',
-        args:[winston, {
-           error_level: 'error'
-          ,ops_level: 'debug'
-          ,request_level:'debug'
-          ,response_level:'info'
-          ,other_level: 'info'
-        }]
-      }]
+      winston: [ goodWinstonStream ]
     }
-}, function(err) {
+}, err => {
   if (err) {
-    return server.log(['error'], 'good load error: ' + err);
+    throw err;
   }
 });
 ```
 
-The following `options` are availble to configure `GoodWinston`:
+Or you can have good initiate the stream from the module for you -
+```javascript
+const winston = require('winston');
+const good = require('good');
 
-* __error_level:__ Map all good `error` events to this winston level (Default `error`).
-* __ops_level:__ Map all good `ops` events to this winston level (Default `info`).
-* __request_level:__ Map all good `request` events to this winston level (Default `info`).
-* __response_level:__ Map all good `response` events to this winston level (Default `info`).
-* __other_level:__ Map all other good events to this winston level (Default `info`).
-* __color:__ colorize output in response logs ( Defalt `true` )
-[0]: http://hapijs.com
-[1]: https://github.com/hapijs/good
-[2]: https://github.com/winstonjs/winston
+server.register({
+  register: good,  
+  options: {
+    reporters:{
+      winston: [{
+        module: 'good-winston',
+        args: [{ winston }]
+      }]
+    }
+}, err => {
+  if (err) {
+    throw err;
+  }
+});
+```
+
+### Using Tags and Levels
+Using the `level` parameter in the `config` variable you can set the log level for internal events that are not controlled from your code (like `ops` and `response`) but for logs where are called from your code you should set a tag with the appropriate log level .`good-winston` will iterate the tag and will set the level by the first tag that matches the `winston` logger available levels. If no appropriate level was found `other` level will be used
