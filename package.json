@@ -25,6 +25,7 @@
   "devDependencies": {},
   "dependencies": {
     "hoek": "^4.1.0",
-    "json-stringify-safe": "^5.0.1"
+    "json-stringify-safe": "^5.0.1",
+    "moment": "^2.18.1"
   }
 }
