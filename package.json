@@ -20,7 +20,7 @@
     "adapter"
   ],
   "author": "Lance Speelmon <lance@speelmon.com>",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/lancespeelmon/good-winston/issues"
   },
