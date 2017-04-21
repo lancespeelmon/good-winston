@@ -3,7 +3,10 @@
   "version": "4.0.0",
   "description": "hapi good-reporter to winston logging adapter",
   "main": "lib/index.js",
-  "scripts": {},
+  "scripts": {
+    "postmerge": "npm install",
+    "postversion": "git push --no-verify && git push --tags --no-verify"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/lancespeelmon/good-winston.git"
@@ -22,7 +25,9 @@
     "url": "https://github.com/lancespeelmon/good-winston/issues"
   },
   "homepage": "https://github.com/lancespeelmon/good-winston",
-  "devDependencies": {},
+  "devDependencies": {
+    "husky": "^0.13.3"
+  },
   "dependencies": {
     "hoek": "^4.1.0",
     "json-stringify-safe": "^5.0.1",
